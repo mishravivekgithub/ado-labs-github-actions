@@ -12,12 +12,12 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-    name     = "optum_codewithai_github"
+    name     = "demo_codewithai_github"
     location = "eastus"
 }
 
 resource "azurerm_storage_account" "sa" {
-    name                     = "optumstorageacctgithub"
+    name                     = "demostorageacctgithub"
     resource_group_name      = azurerm_resource_group.rg.name
     location                 = azurerm_resource_group.rg.location
     account_tier             = "Standard"
