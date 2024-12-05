@@ -1,6 +1,7 @@
 name: 'Terraform'
 
-on: [push, pull_request]
+on: 
+  workflow_dispatch
 
 env:
   TF_LOG: INFO
@@ -32,10 +33,10 @@ jobs:
     - name: Terraform Init
       id: init
       env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
         STORAGE_ACCOUNT: ${{ secrets.STORAGE_ACCOUNT }}
         CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
@@ -50,7 +51,6 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-      if: github.event_name == 'pull_request'
       run: terraform plan -no-color
     
     # Add a comment to pull requests with plan results
@@ -85,7 +85,6 @@ jobs:
 
       # On push to main, build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
