@@ -12,7 +12,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-    name     = "optum_codewithai_github"
+    name     = "newdemo_codewithai_github"
     location = "eastus"
 }
 
